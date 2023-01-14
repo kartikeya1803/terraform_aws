@@ -2,7 +2,7 @@ terraform {
   backend "s3" {
     #BUcket where remote state will be stored
     bucket         = "tfstatechalo"
-    key            = "global/s3/terraform.tfstate"
+    key            = "demostate/"
     region         = "us-east-1"
     dynamodb_table = "terraform_locks"
     encrypt        = true
