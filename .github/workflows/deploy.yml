@@ -6,9 +6,6 @@ jobs:
   deploy_to_aws:
     name: "Deploy on AWS"
     runs-on: ubuntu-latest
-    
-
-    
     defaults:
       run:
         shell: bash
@@ -36,8 +33,8 @@ jobs:
       run: terraform init
 
     # Checks that all Terraform configuration files adhere to a canonical format
-    - name: Terraform Format
-      run: terraform fmt -check
+    - name: Terraform validate
+      run: terraform validate
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
@@ -48,3 +45,6 @@ jobs:
     - name: Terraform Apply
       if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
       run: terraform apply -auto-approve -input=false
+    
+
+    

@@ -7,7 +7,7 @@ terraform {
     dynamodb_table = "terraform_locks"
     encrypt        = true
 
-    
+
   }
   required_providers {
     aws = {
@@ -20,7 +20,7 @@ terraform {
 }
 
 provider "aws" {
-  region  = "us-east-1"
+  region = "us-east-1"
 }
 
 
