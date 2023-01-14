@@ -12,9 +12,7 @@ jobs:
     defaults:
       run:
         shell: bash
-    env:
-      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -27,6 +25,11 @@ jobs:
       
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Exporting AWS creds
+      run: |
+        export aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}
+        export aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    
     - name: Terraform Init
       run: terraform init
 
