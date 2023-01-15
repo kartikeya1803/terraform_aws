@@ -1,5 +1,6 @@
 ![alt text](./image.png)
 
+This repository contains necessary  code and configuration for setting up automated infrastructure deployment workflow.
 
 ## User request flow
  1. Users sends a request to  nginx server  which comes first at internet gateway at our vpc.
