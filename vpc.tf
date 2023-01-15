@@ -29,14 +29,35 @@ resource "aws_subnet" "app_subnet" {
   }
 }
 
-# Creating a private subnet for database server
+# Creating a private subnet for database server in us-east-1a
 resource "aws_subnet" "database_subnet" {
   vpc_id     = aws_vpc.demo_vpc.id
   cidr_block = var.database_subnet_cidr
 
   availability_zone = "us-east-1a"
   tags = {
-    Name = "Database Subnet"
+    Name = "Database Subnet 1"
+  }
+}
+
+# Creating a private subnet for database server in us-east-1b
+resource "aws_subnet" "database_subnet_2" {
+  vpc_id     = aws_vpc.demo_vpc.id
+  cidr_block = var.database_subnet_2_cidr
+
+  availability_zone = "us-east-1b"
+  tags = {
+    Name = "Database Subnet 2"
+  }
+}
+
+# Creating a db subnet group for rds instance
+resource "aws_db_subnet_group" "database_subnet_group" {
+  name       = "postgres_subnet_group"
+  subnet_ids = [aws_subnet.database_subnet.id, aws_subnet.database_subnet_2.id]
+
+  tags = {
+    Name = "Postgres subnet group"
   }
 }
 
@@ -101,7 +122,7 @@ resource "aws_security_group" "app_sg" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["10.1.1.0/24"]
+    cidr_blocks = ["10.1.1.0/24"] # Allow access only from nginx subnet
   }
 
 # SSH access from anywhere
@@ -117,4 +138,23 @@ resource "aws_security_group" "app_sg" {
 tags = {
     Name = "Application SG"
   }
+}
+
+resource "aws_security_group" "db_sg" {
+  vpc_id = "${aws_vpc.demo_vpc.id}"
+# Inbound Rules
+  
+  ingress {
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["10.1.2.0/24"] # Allow access from application subnet only
+  }
+  tags={
+    Name= "Database SG"
+  }
+
+
+  
+
 }

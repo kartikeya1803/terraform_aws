@@ -17,8 +17,8 @@
 1. Vpc - A private VPC which contains all our services
 2. Internet gateway- It provides internet access to/from VPC.
 3. nginx server- EC2 instance with nginx installed.It is deployed in public subnet and can accessible from internet.
-4. application server - EC2 instance with apache tomcat server installed. It is deployed in private subnet and  accessible only through nginx server in public subnet. 
-5. Postrges Database- RDS instance with Postgres engine.It is deployed in private subnet and only accessible by application server in private subnet
+4. application server - EC2 instance with apache tomcat server installed. It is deployed in a private subnet and  accessible only through nginx server in public subnet. 
+5. Postrges Database- RDS instance with Postgres engine.It is deployed in db subnet group which contains two subnet across two availability zones and only accessible by      application server.
 6. Security groups - Security groups are attached to  all instances to block/allow traffic across different subnets.
 7. Github action - Github action is used to automate infrastructure deployement using terraform
 8. Terraform - terraform is used to add/delete/modify infrastructure in AWS as per requirements.
@@ -30,3 +30,5 @@
 3. ec2.tf  - It contains config for deploying nginx server , application server and postgres database.
 4. variables.tf - It contains variables to be used by different terraform files.
 5. .github/workflows/deploy.yaml - It contains configuration for our github actions pipeline.
+6. setup_apache.sh  - Shell script to install apache server. It runs automatically after application instance is provisioned.
+7. setup_nginx.sh  - Shell script to install nginx server. It runs automatically after nginx instance is provisioned.

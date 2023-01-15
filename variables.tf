@@ -13,3 +13,6 @@ variable "application_subnet_cidr" {
 variable "database_subnet_cidr" {
   default = "10.1.3.0/24"
 }
+variable "database_subnet_2_cidr" {
+  default = "10.1.4.0/24"
+}
